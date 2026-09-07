@@ -1,268 +1,670 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-  <meta charset="UTF-8">
-  <title>학교법인 우정학원 능주고등학교 교사 채용 응시원서</title>
-  <style>
-    body { font-family: 'Malgun Gothic', sans-serif; margin: 30px; color: #333; line-height: 1.4; }
-    .container { max-width: 800px; margin: 0 auto; }
-    h1 { text-align: center; font-size: 22px; margin-bottom: 20px; color: #111; }
-    .section-title { font-size: 15px; font-weight: bold; color: #1a365d; margin-top: 25px; margin-bottom: 8px; }
-    
-    table { width: 100%; border-collapse: collapse; margin-bottom: 10px; font-size: 13px; }
-    th, td { border: 1px solid #475569; padding: 8px; text-align: center; vertical-align: middle; }
-    th { background-color: #f1f5f9; font-weight: bold; color: #1e293b; }
-    
-    input[type="text"], input[type="email"], select {
-      width: 95%; padding: 5px; border: 1px solid #ccc; border-radius: 3px; box-sizing: border-box;
-    }
-    .date-select-group { display: flex; align-items: center; justify-content: center; gap: 3px; flex-wrap: wrap; }
-    .date-select-group select { width: auto; }
-    
-    .btn-add { background-color: #2563eb; color: #fff; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 12px; margin-bottom: 15px; }
-    .btn-add:hover { background-color: #1d4ed8; }
-    
-    .agree-box { border: 1px solid #cbd5e1; background-color: #f8fafc; padding: 15px; font-size: 12px; margin-top: 15px; line-height: 1.6; }
-    .agree-item { margin-bottom: 15px; }
-    .agree-check { text-align: right; font-weight: bold; margin-top: 5px; }
-    
-    .btn-submit { width: 100%; background-color: #059669; color: #fff; font-size: 16px; font-weight: bold; padding: 12px; border: none; border-radius: 4px; margin-top: 25px; cursor: pointer; }
-    .btn-submit:hover { background-color: #047857; }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>학교법인 우정학원 능주고등학교 교사 채용 응시원서</title>
+    <!-- EmailJS SDK -->
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+    <script type="text/javascript">
+        (function() {
+            emailjs.init("YOUR_PUBLIC_KEY"); // EmailJS Public Key 입력
+        })();
+    </script>
+    <style>
+        * { box-sizing: border-box; font-family: 'Pretendard', 'Malgun Gothic', sans-serif; }
+        body { background-color: #f4f6f9; margin: 0; padding: 30px 15px; }
+        .container { max-width: 900px; background: #fff; padding: 40px; margin: 0 auto; border-radius: 8px; box-shadow: 0 4px 12px rgba(0,0,0,0.1); }
+        
+        h1 { text-align: center; color: #1a365d; font-size: 24px; margin-bottom: 25px; letter-spacing: -1px; word-break: keep-all; }
+        
+        .section-header { display: flex; justify-content: space-between; align-items: center; margin-top: 25px; margin-bottom: 10px; }
+        .section-title { font-size: 16px; font-weight: bold; color: #1a365d; border-left: 4px solid #1a365d; padding-left: 8px; margin: 0; }
+        
+        table { width: 100%; border-collapse: collapse; margin-bottom: 15px; }
+        th, td { border: 1px solid #cbd5e1; padding: 8px; font-size: 13px; text-align: center; }
+        th { background-color: #f1f5f9; color: #334155; font-weight: 600; }
+        
+        input[type="text"], input[type="email"], input[type="tel"], input[type="date"], select {
+            width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px;
+        }
+        
+        .period-select-group { display: flex; align-items: center; justify-content: center; gap: 3px; }
+        .period-select-group select, .period-select-group input { padding: 4px 2px; font-size: 12px; text-align: center; }
+
+        .agree-box { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; font-size: 13px; line-height: 1.6; color: #334155; margin-bottom: 15px; }
+        
+        .btn-add { background-color: #0d9488; color: white; border: none; padding: 6px 12px; font-size: 13px; border-radius: 4px; cursor: pointer; font-weight: bold; }
+        .btn-add:hover { background-color: #0f766e; }
+        
+        .btn-del { background-color: #ef4444; color: white; border: none; padding: 4px 8px; font-size: 12px; border-radius: 4px; cursor: pointer; }
+        .btn-del:hover { background-color: #dc2626; }
+
+        .btn-submit { width: 100%; background-color: #1a365d; color: white; border: none; padding: 16px; font-size: 17px; font-weight: bold; border-radius: 6px; cursor: pointer; margin-top: 20px; transition: background 0.2s; }
+        .btn-submit:hover { background-color: #2563eb; }
+        .btn-submit:disabled { background-color: #94a3b8; cursor: not-allowed; }
+
+        .no-exp-label { font-size: 13px; font-weight: bold; color: #0f766e; cursor: pointer; display: flex; align-items: center; gap: 4px; }
+    </style>
 </head>
 <body>
 
 <div class="container">
-  <h1>학교법인 우정학원 능주고등학교 교사 채용 응시원서</h1>
+    <h1>학교법인 우정학원 능주고등학교 교사 채용 응시원서</h1>
 
-  <form id="applicationForm">
-    <!-- 1. 기본 인적사항 -->
-    <div class="section-title">1. 기본 인적사항</div>
-    <table>
-      <tr>
-        <td rowspan="4" style="width: 110px; background-color: #f8fafc;">
-          <input type="text" id="photo_place" placeholder="사진 URL 또는 파일" style="text-align: center;">
-        </td>
-        <th style="width: 15%;">지원과목</th>
-        <td style="width: 30%;"><input type="text" id="apply_subject" placeholder="예: 국어"></td>
-        <th style="width: 15%;">성 명</th>
-        <td style="width: 25%;"><input type="text" id="user_name"></td>
-      </tr>
-      <tr>
-        <th>생년월일</th>
-        <td><input type="text" id="birthdate" placeholder="YYYY.MM.DD"></td>
-        <th>성 별</th>
-        <td>
-          <select id="gender">
-            <option value="">선택</option>
-            <option value="남">남</option>
-            <option value="여">여</option>
-          </select>
-        </td>
-      </tr>
-      <tr>
-        <th>연락처</th>
-        <td><input type="text" id="mobile_phone" placeholder="010-0000-0000"></td>
-        <th>E-mail</th>
-        <td><input type="email" id="user_email"></td>
-      </tr>
-      <tr>
-        <th>주 소</th>
-        <td colspan="3"><input type="text" id="address" style="width: 98%;"></td>
-      </tr>
-    </table>
+    <form id="applyForm">
+        
+        <!-- 1. 기본 인적사항 -->
+        <div class="section-header">
+            <h2 class="section-title">1. 기본 인적사항</h2>
+        </div>
+        <table>
+            <tr>
+                <th style="width: 15%;">지원 과목 *</th>
+                <td style="width: 18%;">
+                    <select name="apply_subject" required>
+                        <option value="">선택</option>
+                        <option value="국어">국어</option>
+                        <option value="수학">수학</option>
+                        <option value="영어">영어</option>
+                        <option value="한국사/역사">한국사/역사</option>
+                        <option value="일반사회">일반사회</option>
+                        <option value="지리">지리</option>
+                        <option value="윤리">윤리</option>
+                        <option value="물리">물리</option>
+                        <option value="화학">화학</option>
+                        <option value="생물">생물</option>
+                        <option value="지구과학">지구과학</option>
+                        <option value="체육">체육</option>
+                        <option value="음악">음악</option>
+                        <option value="미술">미술</option>
+                        <option value="기술·가정">기술·가정</option>
+                        <option value="정보">정보</option>
+                        <option value="중국어">중국어</option>
+                        <option value="일본어">일본어</option>
+                        <option value="보건">보건</option>
+                        <option value="전문상담">전문상담</option>
+                        <option value="영양">영양</option>
+                        <option value="기타">기타</option>
+                    </select>
+                </td>
+                <th style="width: 12%;">성명 *</th>
+                <td style="width: 22%;"><input type="text" name="user_name" required placeholder="홍길동"></td>
+                <th style="width: 11%;">성별 *</th>
+                <td style="width: 22%;">
+                    <select name="gender" required>
+                        <option value="">선택</option>
+                        <option value="남">남</option>
+                        <option value="여">여</option>
+                    </select>
+                </td>
+            </tr>
+            <tr>
+                <th>생년월일 *</th>
+                <td colspan="2">
+                    <div class="period-select-group">
+                        <select id="birth_year" required></select>
+                        <select id="birth_month" required></select>
+                        <select id="birth_day" required></select>
+                    </div>
+                    <input type="hidden" name="birthdate" id="birthdate">
+                </td>
+                <th>휴대폰 *</th>
+                <td colspan="2">
+                    <div class="period-select-group">
+                        <select id="phone_prefix" required style="width: 30%;">
+                            <option value="010" selected>010</option>
+                            <option value="011">011</option>
+                            <option value="016">016</option>
+                            <option value="017">017</option>
+                            <option value="018">018</option>
+                            <option value="019">019</option>
+                        </select>
+                        <span>-</span>
+                        <input type="text" id="phone_mid" maxlength="4" placeholder="1234" pattern="[0-9]{3,4}" required style="width: 32%;">
+                        <span>-</span>
+                        <input type="text" id="phone_end" maxlength="4" placeholder="1234" pattern="[0-9]{4}" required style="width: 32%;">
+                    </div>
+                    <input type="hidden" name="mobile_phone" id="mobile_phone">
+                </td>
+            </tr>
+            <tr>
+                <th>현주소 *</th>
+                <td colspan="5"><input type="text" name="address" required placeholder="도로명 주소 입력"></td>
+            </tr>
+            <tr>
+                <th>E-mail *</th>
+                <td colspan="5"><input type="email" name="user_email" required placeholder="example@email.com"></td>
+            </tr>
+            <tr>
+                <th>사진 첨부 *</th>
+                <td colspan="5" style="text-align: left;">
+                    <input type="file" name="photo" accept="image/*" required>
+                    <span style="font-size: 11px; color: #64748b; display: block; margin-top: 4px;">* 최근 6개월 이내 촬영한 사진(3*4cm 규격 권장)</span>
+                </td>
+            </tr>
+        </table>
 
-    <!-- 2. 교원자격증 -->
-    <div class="section-title">2. 교원자격증</div>
-    <table>
-      <thead>
-        <tr>
-          <th style="width: 30%;">자격증 번호</th>
-          <th style="width: 30%;">발급기관명</th>
-          <th style="width: 20%;">전공 구분</th>
-          <th style="width: 20%;">자격증 발급일</th>
-        </tr>
-      </thead>
-      <tbody id="licTbody">
-        <tr class="lic-row">
-          <td><input type="text" class="lic-no"></td>
-          <td><input type="text" class="lic-org"></td>
-          <td><input type="text" class="lic-type"></td>
-          <td><input type="text" class="lic-date" placeholder="YYYY.MM.DD"></td>
-        </tr>
-      </tbody>
-    </table>
-    <button type="button" class="btn-add" onclick="addLicRow()">+ 자격증 추가</button>
+        <!-- 2. 교원자격증 -->
+        <div class="section-header">
+            <h2 class="section-title">2. 교원자격증</h2>
+            <button type="button" class="btn-add" onclick="addTeacherLicRow()">+ 자격증 추가하기</button>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 22%;">자격증 번호</th>
+                    <th style="width: 22%;">발급기관명</th>
+                    <th style="width: 16%;">전공 구분</th>
+                    <th style="width: 35%;">자격증 발급일</th>
+                    <th style="width: 5%;">삭제</th>
+                </tr>
+            </thead>
+            <tbody id="teacherLicTbody">
+                <tr>
+                    <td><input type="text" class="lic-no" placeholder="제 0000호"></td>
+                    <td><input type="text" class="lic-org"></td>
+                    <td>
+                        <select class="lic-type">
+                            <option value="주전공" selected>주전공</option>
+                            <option value="복수전공">복수전공</option>
+                            <option value="부전공">부전공</option>
+                        </select>
+                    </td>
+                    <td>
+                        <div class="period-select-group">
+                            <select class="lic-year"></select>
+                            <select class="lic-month"></select>
+                            <select class="lic-day"></select>
+                        </div>
+                    </td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td><input type="text" class="lic-no" placeholder="제 0000호"></td>
+                    <td><input type="text" class="lic-org"></td>
+                    <td>
+                        <select class="lic-type">
+                            <option value="주전공">주전공</option>
+                            <option value="복수전공" selected>복수전공</option>
+                            <option value="부전공">부전공</option>
+                        </select>
+                    </td>
+                    <td>
+                        <div class="period-select-group">
+                            <select class="lic-year"></select>
+                            <select class="lic-month"></select>
+                            <select class="lic-day"></select>
+                        </div>
+                    </td>
+                    <td>-</td>
+                </tr>
+            </tbody>
+        </table>
 
-    <!-- 3. 학력사항 (연/월 드롭박스 적용) -->
-    <div class="section-title">3. 학력사항</div>
-    <table>
-      <thead>
-        <tr>
-          <th style="width: 45%;">재학기간 (입학 ~ 졸업)</th>
-          <th style="width: 20%;">학교명</th>
-          <th style="width: 20%;">학과명</th>
-          <th style="width: 15%;">비고</th>
-        </tr>
-      </thead>
-      <tbody id="eduTbody">
-        <tr class="edu-row">
-          <td>
-            <div class="date-select-group">
-              <select class="edu-start-year"></select>년
-              <select class="edu-start-month"></select>월
-              <span>~</span>
-              <select class="edu-end-year"></select>년
-              <select class="edu-end-month"></select>월
+        <input type="hidden" name="teacher_lic_summary" id="teacher_lic_summary">
+
+        <!-- 3. 학력사항 -->
+        <div class="section-header">
+            <h2 class="section-title">3. 학력사항</h2>
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    <th style="width: 42%;">재학기간</th>
+                    <th style="width: 20%;">학교명</th>
+                    <th style="width: 20%;">학과명</th>
+                    <th style="width: 18%;">비고</th>
+                </tr>
+            </thead>
+            <tbody id="eduTbody">
+                <tr>
+                    <td>
+                        <div class="period-select-group">
+                            <select class="edu-start-year"></select>
+                            <select class="edu-start-month"></select>
+                            <span>~</span>
+                            <select class="edu-end-year"></select>
+                            <select class="edu-end-month"></select>
+                        </div>
+                    </td>
+                    <td><input type="text" class="edu-school" placeholder="○○대학교"></td>
+                    <td><input type="text" class="edu-major" placeholder="○○학과"></td>
+                    <td><input type="text" class="edu-note" placeholder="졸업/수료 등"></td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="period-select-group">
+                            <select class="edu-start-year"></select>
+                            <select class="edu-start-month"></select>
+                            <span>~</span>
+                            <select class="edu-end-year"></select>
+                            <select class="edu-end-month"></select>
+                        </div>
+                    </td>
+                    <td><input type="text" class="edu-school" placeholder="○○대학원"></td>
+                    <td><input type="text" class="edu-major" placeholder="○○전공"></td>
+                    <td><input type="text" class="edu-note" placeholder="졸업/수료 등"></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <input type="hidden" name="education_summary" id="education_summary">
+
+        <!-- 4. 교원 경력 -->
+        <div class="section-header">
+            <h2 class="section-title">4. 교원 경력 (정규, 기간제, 시간제)</h2>
+            <div style="display: flex; align-items: center; gap: 15px;">
+                <label class="no-exp-label">
+                    <input type="checkbox" id="noExpCheckbox" onchange="toggleNoExperience(this)"> 경력 없음 (신규)
+                </label>
+                <button type="button" class="btn-add" id="btnAddExp" onclick="addExperienceRow()">+ 경력 추가하기</button>
             </div>
-          </td>
-          <td><input type="text" class="edu-school" placeholder="OO대학교"></td>
-          <td><input type="text" class="edu-major" placeholder="OO학과"></td>
-          <td><input type="text" class="edu-note" placeholder="졸업/수료"></td>
-        </tr>
-      </tbody>
-    </table>
-    <button type="button" class="btn-add" onclick="addEduRow()">+ 학력 추가</button>
-
-    <!-- 4. 교원 경력 -->
-    <div class="section-title">4. 교원 경력</div>
-    <table>
-      <thead>
-        <tr>
-          <th style="width: 35%;">근무기간</th>
-          <th style="width: 20%;">직위</th>
-          <th style="width: 30%;">근무기관명</th>
-          <th style="width: 15%;">근무년월</th>
-        </tr>
-      </thead>
-      <tbody id="expTbody">
-        <tr class="exp-row">
-          <td><input type="text" class="exp-period" placeholder="2020.03 ~ 2022.02"></td>
-          <td><input type="text" class="exp-pos" placeholder="기간제교사"></td>
-          <td><input type="text" class="exp-org" placeholder="OO고등학교"></td>
-          <td><input type="text" class="exp-months" placeholder="2년"></td>
-        </tr>
-      </tbody>
-      <tfoot>
-        <tr>
-          <th colspan="3">총 경력</th>
-          <td><input type="text" id="total_exp" placeholder="예: 2년 0개월"></td>
-        </tr>
-      </tfoot>
-    </table>
-    <button type="button" class="btn-add" onclick="addExpRow()">+ 경력 추가</button>
-
-    <!-- 5. 확인 및 동의사항 -->
-    <div class="section-title">5. 확인 및 동의사항</div>
-    <div class="agree-box">
-      <div class="agree-item">
-        <p>1. 위 기재 사항은 사실과 틀림없으며, 채용 공고의 채용 제한 사유 및 지원 자격을 확인하였고 허위 내용이 있을 경우 계약해지 사유가 될 수 있음을 확인합니다.</p>
-        <div class="agree-check">
-          채용제한자 조회 동의: 
-          <label><input type="radio" name="agree_check" value="동의함"> 동의함</label>
-          <label><input type="radio" name="agree_check" value="동의하지 않음"> 동의하지 않음</label>
         </div>
-      </div>
-      <div class="agree-item" style="margin-bottom: 0;">
-        <p>2. 개인정보보호법 제15조 1항(개인정보의 수집·이용)에 따라 계약제교원 채용을 위한 본인의 이름, 주소, 전화번호 등 개인정보를 제공하는 것에 동의합니다.</p>
-        <div class="agree-check">
-          개인정보 수집·이용 동의: 
-          <label><input type="radio" name="agree_privacy" value="동의함"> 동의함</label>
-          <label><input type="radio" name="agree_privacy" value="동의하지 않음"> 동의하지 않음</label>
-        </div>
-      </div>
-    </div>
+        <p style="font-size: 11px; color: #ef4444; margin-top:-5px; margin-bottom:8px;">※ 산학겸임교사, 명예교사, 강사 경력은 제외</p>
+        
+        <table id="expTable">
+            <thead>
+                <tr>
+                    <th style="width: 42%;">근무기간</th>
+                    <th style="width: 15%;">직위</th>
+                    <th style="width: 23%;">근무기관명</th>
+                    <th style="width: 15%;">근무년월</th>
+                    <th style="width: 5%;">삭제</th>
+                </tr>
+            </thead>
+            <tbody id="expTbody">
+                <!-- 자바스크립트로 생성 -->
+            </tbody>
+            <tfoot>
+                <tr>
+                    <th colspan="3">총 경력</th>
+                    <td colspan="2">
+                        <input type="text" name="total_exp" id="total_exp" placeholder="자동 계산" readonly style="background-color: #f8fafc; font-weight: bold; color: #1a365d; text-align: center;">
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
 
-    <button type="submit" class="btn-submit">응시원서 제출하기</button>
-  </form>
+        <input type="hidden" name="experience_summary" id="experience_summary">
+
+        <!-- 5. 확인 및 동의사항 -->
+        <div class="section-header">
+            <h2 class="section-title">5. 확인 및 동의사항</h2>
+        </div>
+        
+        <div class="agree-box">
+            위 기재 사항은 사실과 틀림없으며, 채용 공고의 채용의 제한 사유 및 지원 자격을 확인하였고 허위 내용이 있을 경우, 계약해지 사유가 될 수 있음을 확인합니다.
+            <div style="margin-top: 8px; text-align: right;">
+                <strong>응모불가 대상인 채용제한자에 해당여부 조회 동의:</strong>
+                <label><input type="radio" name="agree_check" value="동의함" required> 동의함</label>
+                <label><input type="radio" name="agree_check" value="동의하지 않음"> 동의하지 않음</label>
+            </div>
+        </div>
+
+        <div class="agree-box">
+            개인정보보호법 제15조 1항(개인정보의 수집·이용)에 따라 계약제교원 채용을 위한 본인의 이름, 주소, 전화번호 등 개인정보를 제공하는 것에 동의합니다.
+            <div style="margin-top: 8px; text-align: right;">
+                <strong>개인정보 수집·이용 동의:</strong>
+                <label><input type="radio" name="agree_privacy" value="동의함" required> 동의함</label>
+                <label><input type="radio" name="agree_privacy" value="동의하지 않음"> 동의하지 않음</label>
+            </div>
+        </div>
+
+        <p style="text-align: center; font-weight: bold; margin-top: 35px; color: #1a365d; font-size: 18px;">
+            학교법인 우정학원 능주고등학교장 귀하
+        </p>
+        <p style="font-size: 11px; color: #64748b; text-align: center; margin-bottom: 20px;">
+            ※ 위의 기재사항이 사실과 다르게 기록되어 발생되는 불이익에 대하여는 신청인의 책임으로 합니다.
+        </p>
+
+        <button type="submit" id="submitBtn" class="btn-submit">응시원서 제출하기</button>
+    </form>
 </div>
 
 <script>
-  // 년/월 드롭박스 옵션 생성 함수
-  function initDateSelects(row) {
-    const currentYear = new Date().getFullYear();
-    const startYearSelects = row.querySelectorAll('.edu-start-year, .edu-end-year');
-    const monthSelects = row.querySelectorAll('.edu-start-month, .edu-end-month');
+    // 옵션 생성 도우미 (년도, 월, 일)
+    function generateYearOptions(startYear = 1980) {
+        const currentYear = new Date().getFullYear();
+        let options = '<option value="">년도</option>';
+        for (let y = currentYear; y >= startYear; y--) {
+            options += `<option value="${y}">${y}년</option>`;
+        }
+        return options;
+    }
 
-    startYearSelects.forEach(select => {
-      select.innerHTML = '<option value="">선택</option>';
-      for (let y = currentYear; y >= 1970; y--) {
-        select.innerHTML += `<option value="${y}">${y}</option>`;
-      }
+    function generateMonthOptions() {
+        let options = '<option value="">월</option>';
+        for (let m = 1; m <= 12; m++) {
+            const mStr = m < 10 ? '0' + m : m;
+            options += `<option value="${mStr}">${m}월</option>`;
+        }
+        return options;
+    }
+
+    function generateDayOptions() {
+        let options = '<option value="">일</option>';
+        for (let d = 1; d <= 31; d++) {
+            const dStr = d < 10 ? '0' + d : d;
+            options += `<option value="${dStr}">${d}일</option>`;
+        }
+        return options;
+    }
+
+    // 생년월일 드롭다운 초기화
+    function initBirthdateSelects() {
+        const yearSelect = document.getElementById('birth_year');
+        const monthSelect = document.getElementById('birth_month');
+        const daySelect = document.getElementById('birth_day');
+
+        const currentYear = new Date().getFullYear();
+        
+        let yOptions = '<option value="">년도</option>';
+        for (let y = currentYear - 18; y >= 1950; y--) {
+            yOptions += `<option value="${y}">${y}년</option>`;
+        }
+        yearSelect.innerHTML = yOptions;
+        monthSelect.innerHTML = generateMonthOptions();
+        daySelect.innerHTML = generateDayOptions();
+    }
+
+    // 초기 자격증 발급일 옵션 적용 (년/월/일)
+    function initTeacherLicSelects() {
+        const yOptions = generateYearOptions(1980);
+        const mOptions = generateMonthOptions();
+        const dOptions = generateDayOptions();
+
+        document.querySelectorAll('#teacherLicTbody .lic-year').forEach(el => el.innerHTML = yOptions);
+        document.querySelectorAll('#teacherLicTbody .lic-month').forEach(el => el.innerHTML = mOptions);
+        document.querySelectorAll('#teacherLicTbody .lic-day').forEach(el => el.innerHTML = dOptions);
+    }
+
+    // 학력사항 연도/월 옵션 초기화
+    function initEducationSelects() {
+        const yOptions = generateYearOptions(1970);
+        const mOptions = generateMonthOptions();
+
+        document.querySelectorAll('#eduTbody .edu-start-year, #eduTbody .edu-end-year').forEach(el => el.innerHTML = yOptions);
+        document.querySelectorAll('#eduTbody .edu-start-month, #eduTbody .edu-end-month').forEach(el => el.innerHTML = mOptions);
+    }
+
+    // 교원자격증 행 추가
+    function addTeacherLicRow() {
+        const tbody = document.getElementById('teacherLicTbody');
+        const newRow = document.createElement('tr');
+        const yOptions = generateYearOptions(1980);
+        const mOptions = generateMonthOptions();
+        const dOptions = generateDayOptions();
+        
+        newRow.innerHTML = `
+            <td><input type="text" class="lic-no" placeholder="제 0000호"></td>
+            <td><input type="text" class="lic-org"></td>
+            <td>
+                <select class="lic-type">
+                    <option value="주전공">주전공</option>
+                    <option value="복수전공">복수전공</option>
+                    <option value="부전공" selected>부전공</option>
+                </select>
+            </td>
+            <td>
+                <div class="period-select-group">
+                    <select class="lic-year">${yOptions}</select>
+                    <select class="lic-month">${mOptions}</select>
+                    <select class="lic-day">${dOptions}</select>
+                </div>
+            </td>
+            <td><button type="button" class="btn-del" onclick="removeRow(this)">삭제</button></td>
+        `;
+        tbody.appendChild(newRow);
+    }
+
+    // 경력 행 추가
+    function addExperienceRow(isFirst = false) {
+        const tbody = document.getElementById('expTbody');
+        const newRow = document.createElement('tr');
+        
+        const yearOptions = generateYearOptions(1980);
+        const monthOptions = generateMonthOptions();
+        const deleteBtn = isFirst ? '-' : `<button type="button" class="btn-del" onclick="removeRow(this, true)">삭제</button>`;
+
+        newRow.innerHTML = `
+            <td>
+                <div class="period-select-group">
+                    <select class="start-year" onchange="calculateRowPeriod(this)">${yearOptions}</select>
+                    <select class="start-month" onchange="calculateRowPeriod(this)">${monthOptions}</select>
+                    <span>~</span>
+                    <select class="end-year" onchange="calculateRowPeriod(this)">${yearOptions}</select>
+                    <select class="end-month" onchange="calculateRowPeriod(this)">${monthOptions}</select>
+                </div>
+            </td>
+            <td><input type="text" class="exp-pos" placeholder="기간제교사"></td>
+            <td><input type="text" class="exp-org"></td>
+            <td><input type="text" class="exp-months" placeholder="자동 계산" readonly style="background-color: #f8fafc; text-align: center;"></td>
+            <td>${deleteBtn}</td>
+        `;
+        tbody.appendChild(newRow);
+    }
+
+    // 경력 없음 체크박스 제어
+    function toggleNoExperience(checkbox) {
+        const tbody = document.getElementById('expTbody');
+        const btnAddExp = document.getElementById('btnAddExp');
+        const totalInput = document.getElementById('total_exp');
+
+        if (checkbox.checked) {
+            tbody.querySelectorAll('input, select, button').forEach(el => el.disabled = true);
+            btnAddExp.disabled = true;
+            btnAddExp.style.opacity = '0.5';
+            btnAddExp.style.cursor = 'not-allowed';
+            totalInput.value = '해당없음 (신규)';
+        } else {
+            tbody.querySelectorAll('input, select, button').forEach(el => el.disabled = false);
+            btnAddExp.disabled = false;
+            btnAddExp.style.opacity = '1';
+            btnAddExp.style.cursor = 'pointer';
+            calculateTotalExperience();
+        }
+    }
+
+    // 행 삭제 함수
+    function removeRow(btn, isExp = false) {
+        const row = btn.closest('tr');
+        row.remove();
+        if (isExp) {
+            calculateTotalExperience();
+        }
+    }
+
+    // 개별 행 근무년월 계산
+    function calculateRowPeriod(selectElem) {
+        const row = selectElem.closest('tr');
+        const sYear = parseInt(row.querySelector('.start-year').value, 10);
+        const sMonth = parseInt(row.querySelector('.start-month').value, 10);
+        const eYear = parseInt(row.querySelector('.end-year').value, 10);
+        const eMonth = parseInt(row.querySelector('.end-month').value, 10);
+        const expMonthsInput = row.querySelector('.exp-months');
+
+        if (sYear && sMonth && eYear && eMonth) {
+            const startTotal = (sYear * 12) + sMonth;
+            const endTotal = (eYear * 12) + eMonth;
+
+            if (endTotal < startTotal) {
+                alert('종료일은 시작일보다 이전일 수 없습니다.');
+                expMonthsInput.value = '';
+            } else {
+                const diffMonths = (endTotal - startTotal) + 1;
+                const y = Math.floor(diffMonths / 12);
+                const m = diffMonths % 12;
+
+                let resultStr = '';
+                if (y > 0 && m > 0) resultStr = `${y}년 ${m}개월`;
+                else if (y > 0) resultStr = `${y}년`;
+                else resultStr = `${m}개월`;
+
+                expMonthsInput.value = resultStr;
+            }
+        } else {
+            expMonthsInput.value = '';
+        }
+
+        calculateTotalExperience();
+    }
+
+    // 총 경력 합산 계산 함수
+    function calculateTotalExperience() {
+        if (document.getElementById('noExpCheckbox').checked) return;
+
+        const expRows = document.querySelectorAll('#expTbody tr');
+        let totalMonthsSum = 0;
+
+        expRows.forEach(row => {
+            const sYear = parseInt(row.querySelector('.start-year').value, 10);
+            const sMonth = parseInt(row.querySelector('.start-month').value, 10);
+            const eYear = parseInt(row.querySelector('.end-year').value, 10);
+            const eMonth = parseInt(row.querySelector('.end-month').value, 10);
+
+            if (sYear && sMonth && eYear && eMonth && (eYear * 12 + eMonth >= sYear * 12 + sMonth)) {
+                const diff = ((eYear * 12) + eMonth) - ((sYear * 12) + sMonth) + 1;
+                totalMonthsSum += diff;
+            }
+        });
+
+        const totalYears = Math.floor(totalMonthsSum / 12);
+        const remainingMonths = totalMonthsSum % 12;
+
+        const totalInput = document.getElementById('total_exp');
+        if (totalMonthsSum === 0) {
+            totalInput.value = '';
+        } else if (totalYears > 0 && remainingMonths > 0) {
+            totalInput.value = `${totalYears}년 ${remainingMonths}개월`;
+        } else if (totalYears > 0) {
+            totalInput.value = `${totalYears}년`;
+        } else {
+            totalInput.value = `${remainingMonths}개월`;
+        }
+    }
+
+    window.onload = function() {
+        initBirthdateSelects();
+        initTeacherLicSelects();
+        initEducationSelects();
+        addExperienceRow(true);
+    };
+
+    // 폼 제출 처리
+    document.getElementById('applyForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+
+        // 생년월일 데이터 취합
+        const by = document.getElementById('birth_year').value;
+        const bm = document.getElementById('birth_month').value;
+        const bd = document.getElementById('birth_day').value;
+        
+        if (!by || !bm || !bd) {
+            alert('생년월일을 올바르게 선택해 주세요.');
+            return;
+        }
+        document.getElementById('birthdate').value = `${by}.${bm}.${bd}`;
+
+        // 휴대폰 번호 데이터 취합
+        const p1 = document.getElementById('phone_prefix').value;
+        const p2 = document.getElementById('phone_mid').value.trim();
+        const p3 = document.getElementById('phone_end').value.trim();
+
+        if (!p2 || !p3) {
+            alert('휴대폰 번호를 올바르게 입력해 주세요.');
+            return;
+        }
+        document.getElementById('mobile_phone').value = `${p1}-${p2}-${p3}`;
+
+        // 교원자격증 데이터 취합
+        const licRows = document.querySelectorAll('#teacherLicTbody tr');
+        let licList = [];
+        licRows.forEach((row, idx) => {
+            const no = row.querySelector('.lic-no').value;
+            const org = row.querySelector('.lic-org').value;
+            const type = row.querySelector('.lic-type').value;
+            const ly = row.querySelector('.lic-year').value;
+            const lm = row.querySelector('.lic-month').value;
+            const ld = row.querySelector('.lic-day').value;
+            const dateStr = (ly && lm && ld) ? `${ly}.${lm}.${ld}` : '미입력';
+
+            if (no || org) {
+                licList.push(`[자격증 ${idx + 1}] 번호: ${no} | 발급기관: ${org} | 전공구분: ${type} | 발급일: ${dateStr}`);
+            }
+        });
+        document.getElementById('teacher_lic_summary').value = licList.length > 0 
+            ? licList.join('\n') 
+            : '입력된 교원자격증 없음';
+
+        // 학력사항 데이터 취합
+        const eduRows = document.querySelectorAll('#eduTbody tr');
+        let eduList = [];
+        eduRows.forEach((row, idx) => {
+            const sY = row.querySelector('.edu-start-year').value;
+            const sM = row.querySelector('.edu-start-month').value;
+            const eY = row.querySelector('.edu-end-year').value;
+            const eM = row.querySelector('.edu-end-month').value;
+            const school = row.querySelector('.edu-school').value;
+            const major = row.querySelector('.edu-major').value;
+            const note = row.querySelector('.edu-note').value;
+
+            if (school || major) {
+                const periodStr = (sY && sM && eY && eM) ? `${sY}.${sM} ~ ${eY}.${eM}` : '미입력';
+                eduList.push(`[학력 ${idx + 1}] 기간: ${periodStr} | 학교명: ${school} | 학과명: ${major} | 비고: ${note}`);
+            }
+        });
+        document.getElementById('education_summary').value = eduList.length > 0
+            ? eduList.join('\n')
+            : '입력된 학력사항 없음';
+
+        // 경력 데이터 취합
+        const isNoExp = document.getElementById('noExpCheckbox').checked;
+        if (isNoExp) {
+            document.getElementById('experience_summary').value = '경력 없음 (신규 지원)';
+        } else {
+            const expRows = document.querySelectorAll('#expTbody tr');
+            let expList = [];
+            expRows.forEach((row, idx) => {
+                const sY = row.querySelector('.start-year').value;
+                const sM = row.querySelector('.start-month').value;
+                const eY = row.querySelector('.end-year').value;
+                const eM = row.querySelector('.end-month').value;
+                const pos = row.querySelector('.exp-pos').value;
+                const org = row.querySelector('.exp-org').value;
+                const months = row.querySelector('.exp-months').value;
+
+                if (sY || pos || org) {
+                    const periodStr = (sY && sM && eY && eM) ? `${sY}.${sM} ~ ${eY}.${eM}` : '미입력';
+                    expList.push(`[경력 ${idx + 1}] 기간: ${periodStr} | 직위: ${pos} | 기관: ${org} | 근무년월: ${months}`);
+                }
+            });
+            document.getElementById('experience_summary').value = expList.length > 0 
+                ? expList.join('\n') 
+                : '경력 없음 (신규 지원)';
+        }
+
+        const btn = document.getElementById('submitBtn');
+        btn.innerText = '제출 중...';
+        btn.disabled = true;
+
+        const serviceID = 'YOUR_SERVICE_ID';   // EmailJS Service ID
+        const templateID = 'YOUR_TEMPLATE_ID'; // EmailJS Template ID
+
+        emailjs.sendForm(serviceID, templateID, this)
+            .then(() => {
+                btn.innerText = '제출 완료';
+                alert('학교법인 우정학원 능주고등학교 교사 채용 응시원서가 성공적으로 접수되었습니다.');
+                document.getElementById('applyForm').reset();
+                document.getElementById('total_exp').value = '';
+                btn.disabled = false;
+                btn.innerText = '응시원서 제출하기';
+            }, (err) => {
+                btn.disabled = false;
+                btn.innerText = '응시원서 제출하기';
+                alert('제출 중 오류가 발생했습니다. 다시 시도해 주세요:\n' + JSON.stringify(err));
+            });
     });
-
-    monthSelects.forEach(select => {
-      select.innerHTML = '<option value="">선택</option>';
-      for (let m = 1; m <= 12; m++) {
-        const monthStr = m < 10 ? '0' + m : m;
-        select.innerHTML += `<option value="${monthStr}">${m}</option>`;
-      }
-    });
-  }
-
-  // 초기화
-  document.addEventListener('DOMContentLoaded', function() {
-    document.querySelectorAll('.edu-row').forEach(row => initDateSelects(row));
-  });
-
-  // 자격증 행 추가
-  function addLicRow() {
-    const tbody = document.getElementById('licTbody');
-    const newRow = tbody.rows[0].cloneNode(true);
-    newRow.querySelectorAll('input').forEach(input => input.value = '');
-    tbody.appendChild(newRow);
-  }
-
-  // 학력 행 추가
-  function addEduRow() {
-    const tbody = document.getElementById('eduTbody');
-    const newRow = tbody.rows[0].cloneNode(true);
-    newRow.querySelectorAll('input').forEach(input => input.value = '');
-    initDateSelects(newRow);
-    tbody.appendChild(newRow);
-  }
-
-  // 경력 행 추가
-  function addExpRow() {
-    const tbody = document.getElementById('expTbody');
-    const newRow = tbody.rows[0].cloneNode(true);
-    newRow.querySelectorAll('input').forEach(input => input.value = '');
-    tbody.appendChild(newRow);
-  }
-
-  // 제출 데이터 수집 예시
-  document.getElementById('applicationForm').addEventListener('submit', function(e) {
-    e.preventDefault();
-
-    // 동의사항 체크 확인
-    const agreeCheck = document.querySelector('input[name="agree_check"]:checked')?.value || '미선택';
-    const agreePrivacy = document.querySelector('input[name="agree_privacy"]:checked')?.value || '미선택';
-
-    // 학력사항 데이터 생성 (년.월 ~ 년.월 조합)
-    const educations = [];
-    document.querySelectorAll('#eduTbody tr').forEach(row => {
-      const sY = row.querySelector('.edu-start-year').value;
-      const sM = row.querySelector('.edu-start-month').value;
-      const eY = row.querySelector('.edu-end-year').value;
-      const eM = row.querySelector('.edu-end-month').value;
-      
-      let period = '';
-      if (sY && sM && eY && eM) {
-        period = `${sY}.${sM} ~ ${eY}.${eM}`;
-      }
-
-      educations.push({
-        period: period,
-        school: row.querySelector('.edu-school').value,
-        major: row.querySelector('.edu-major').value,
-        note: row.querySelector('.edu-note').value
-      });
-    });
-
-    console.log("동의1:", agreeCheck, "동의2:", agreePrivacy);
-    console.log("학력 목록:", educations);
-    alert("제출 데이터가 콘솔에 수집되었습니다.");
-  });
 </script>
 
 </body>
