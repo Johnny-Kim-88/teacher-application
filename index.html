@@ -29,8 +29,8 @@
             width: 100%; padding: 6px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px;
         }
         
-        .period-select-group { display: flex; align-items: center; justify-content: center; gap: 2px; }
-        .period-select-group select { padding: 4px 2px; font-size: 12px; }
+        .period-select-group { display: flex; align-items: center; justify-content: center; gap: 3px; }
+        .period-select-group select, .period-select-group input { padding: 4px 2px; font-size: 12px; text-align: center; }
 
         .agree-box { background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; font-size: 13px; line-height: 1.6; color: #334155; margin-bottom: 15px; }
         
@@ -101,11 +101,32 @@
             </tr>
             <tr>
                 <th>생년월일 *</th>
-                <td><input type="text" name="birthdate" placeholder="YYYY.MM.DD" required></td>
-                <th>자택 전화</th>
-                <td><input type="tel" name="home_phone" placeholder="02-000-0000"></td>
+                <td colspan="2">
+                    <div class="period-select-group">
+                        <select id="birth_year" required></select>
+                        <select id="birth_month" required></select>
+                        <select id="birth_day" required></select>
+                    </div>
+                    <input type="hidden" name="birthdate" id="birthdate">
+                </td>
                 <th>휴대폰 *</th>
-                <td><input type="tel" name="mobile_phone" placeholder="010-0000-0000" required></td>
+                <td colspan="2">
+                    <div class="period-select-group">
+                        <select id="phone_prefix" required style="width: 30%;">
+                            <option value="010" selected>010</option>
+                            <option value="011">011</option>
+                            <option value="016">016</option>
+                            <option value="017">017</option>
+                            <option value="018">018</option>
+                            <option value="019">019</option>
+                        </select>
+                        <span>-</span>
+                        <input type="text" id="phone_mid" maxlength="4" placeholder="1234" pattern="[0-9]{3,4}" required style="width: 32%;">
+                        <span>-</span>
+                        <input type="text" id="phone_end" maxlength="4" placeholder="1234" pattern="[0-9]{4}" required style="width: 32%;">
+                    </div>
+                    <input type="hidden" name="mobile_phone" id="mobile_phone">
+                </td>
             </tr>
             <tr>
                 <th>현주소 *</th>
@@ -132,10 +153,10 @@
         <table>
             <thead>
                 <tr>
-                    <th style="width: 30%;">자격증 번호</th>
-                    <th style="width: 25%;">발급기관명</th>
-                    <th style="width: 20%;">전공 구분</th>
-                    <th style="width: 20%;">자격증 발급일</th>
+                    <th style="width: 22%;">자격증 번호</th>
+                    <th style="width: 22%;">발급기관명</th>
+                    <th style="width: 16%;">전공 구분</th>
+                    <th style="width: 35%;">자격증 발급일</th>
                     <th style="width: 5%;">삭제</th>
                 </tr>
             </thead>
@@ -150,7 +171,13 @@
                             <option value="부전공">부전공</option>
                         </select>
                     </td>
-                    <td><input type="text" class="lic-date" placeholder="YYYY.MM"></td>
+                    <td>
+                        <div class="period-select-group">
+                            <select class="lic-year"></select>
+                            <select class="lic-month"></select>
+                            <select class="lic-day"></select>
+                        </div>
+                    </td>
                     <td>-</td>
                 </tr>
                 <tr>
@@ -163,7 +190,13 @@
                             <option value="부전공">부전공</option>
                         </select>
                     </td>
-                    <td><input type="text" class="lic-date" placeholder="YYYY.MM"></td>
+                    <td>
+                        <div class="period-select-group">
+                            <select class="lic-year"></select>
+                            <select class="lic-month"></select>
+                            <select class="lic-day"></select>
+                        </div>
+                    </td>
                     <td>-</td>
                 </tr>
             </tbody>
@@ -268,9 +301,8 @@
 </div>
 
 <script>
-    // 옵션 생성 도우미 (년도, 월)
-    function generateYearOptions() {
-        const startYear = 1980;
+    // 옵션 생성 도우미 (년도, 월, 일)
+    function generateYearOptions(startYear = 1980) {
         const currentYear = new Date().getFullYear();
         let options = '<option value="">년도</option>';
         for (let y = currentYear; y >= startYear; y--) {
@@ -288,10 +320,50 @@
         return options;
     }
 
+    function generateDayOptions() {
+        let options = '<option value="">일</option>';
+        for (let d = 1; d <= 31; d++) {
+            const dStr = d < 10 ? '0' + d : d;
+            options += `<option value="${dStr}">${d}일</option>`;
+        }
+        return options;
+    }
+
+    // 생년월일 드롭다운 초기화
+    function initBirthdateSelects() {
+        const yearSelect = document.getElementById('birth_year');
+        const monthSelect = document.getElementById('birth_month');
+        const daySelect = document.getElementById('birth_day');
+
+        const currentYear = new Date().getFullYear();
+        
+        let yOptions = '<option value="">년도</option>';
+        for (let y = currentYear - 18; y >= 1950; y--) {
+            yOptions += `<option value="${y}">${y}년</option>`;
+        }
+        yearSelect.innerHTML = yOptions;
+        monthSelect.innerHTML = generateMonthOptions();
+        daySelect.innerHTML = generateDayOptions();
+    }
+
+    // 초기 자격증 발급일 옵션 적용 (년/월/일)
+    function initTeacherLicSelects() {
+        const yOptions = generateYearOptions(1980);
+        const mOptions = generateMonthOptions();
+        const dOptions = generateDayOptions();
+
+        document.querySelectorAll('#teacherLicTbody .lic-year').forEach(el => el.innerHTML = yOptions);
+        document.querySelectorAll('#teacherLicTbody .lic-month').forEach(el => el.innerHTML = mOptions);
+        document.querySelectorAll('#teacherLicTbody .lic-day').forEach(el => el.innerHTML = dOptions);
+    }
+
     // 교원자격증 행 추가
     function addTeacherLicRow() {
         const tbody = document.getElementById('teacherLicTbody');
         const newRow = document.createElement('tr');
+        const yOptions = generateYearOptions(1980);
+        const mOptions = generateMonthOptions();
+        const dOptions = generateDayOptions();
         
         newRow.innerHTML = `
             <td><input type="text" class="lic-no" placeholder="제 0000호"></td>
@@ -303,7 +375,13 @@
                     <option value="부전공" selected>부전공</option>
                 </select>
             </td>
-            <td><input type="text" class="lic-date" placeholder="YYYY.MM"></td>
+            <td>
+                <div class="period-select-group">
+                    <select class="lic-year">${yOptions}</select>
+                    <select class="lic-month">${mOptions}</select>
+                    <select class="lic-day">${dOptions}</select>
+                </div>
+            </td>
             <td><button type="button" class="btn-del" onclick="removeRow(this)">삭제</button></td>
         `;
         tbody.appendChild(newRow);
@@ -314,7 +392,7 @@
         const tbody = document.getElementById('expTbody');
         const newRow = document.createElement('tr');
         
-        const yearOptions = generateYearOptions();
+        const yearOptions = generateYearOptions(1980);
         const monthOptions = generateMonthOptions();
         const deleteBtn = isFirst ? '-' : `<button type="button" class="btn-del" onclick="removeRow(this, true)">삭제</button>`;
 
@@ -436,6 +514,8 @@
     }
 
     window.onload = function() {
+        initBirthdateSelects();
+        initTeacherLicSelects();
         addExperienceRow(true);
     };
 
@@ -443,17 +523,42 @@
     document.getElementById('applyForm').addEventListener('submit', function(event) {
         event.preventDefault();
 
-        // 교원자격증 데이터 취합
+        // 생년월일 데이터 취합
+        const by = document.getElementById('birth_year').value;
+        const bm = document.getElementById('birth_month').value;
+        const bd = document.getElementById('birth_day').value;
+        
+        if (!by || !bm || !bd) {
+            alert('생년월일을 올바르게 선택해 주세요.');
+            return;
+        }
+        document.getElementById('birthdate').value = `${by}.${bm}.${bd}`;
+
+        // 휴대폰 번호 데이터 취합
+        const p1 = document.getElementById('phone_prefix').value;
+        const p2 = document.getElementById('phone_mid').value.trim();
+        const p3 = document.getElementById('phone_end').value.trim();
+
+        if (!p2 || !p3) {
+            alert('휴대폰 번호를 올바르게 입력해 주세요.');
+            return;
+        }
+        document.getElementById('mobile_phone').value = `${p1}-${p2}-${p3}`;
+
+        // 교원자격증 데이터 취합 (년.월.일)
         const licRows = document.querySelectorAll('#teacherLicTbody tr');
         let licList = [];
         licRows.forEach((row, idx) => {
             const no = row.querySelector('.lic-no').value;
             const org = row.querySelector('.lic-org').value;
             const type = row.querySelector('.lic-type').value;
-            const date = row.querySelector('.lic-date').value;
+            const ly = row.querySelector('.lic-year').value;
+            const lm = row.querySelector('.lic-month').value;
+            const ld = row.querySelector('.lic-day').value;
+            const dateStr = (ly && lm && ld) ? `${ly}.${lm}.${ld}` : '미입력';
 
             if (no || org) {
-                licList.push(`[자격증 ${idx + 1}] 번호: ${no} | 발급기관: ${org} | 전공구분: ${type} | 발급일: ${date}`);
+                licList.push(`[자격증 ${idx + 1}] 번호: ${no} | 발급기관: ${org} | 전공구분: ${type} | 발급일: ${dateStr}`);
             }
         });
         document.getElementById('teacher_lic_summary').value = licList.length > 0 
