@@ -569,7 +569,15 @@
 
         newRow.innerHTML = `
             <td><div class="period-select-group"><select class="start-year" onchange="calculateRowPeriod(this)">${yOpt}</select><select class="start-month" onchange="calculateRowPeriod(this)">${mOpt}</select><span>~</span><select class="end-year" onchange="calculateRowPeriod(this)">${yOpt}</select><select class="end-month" onchange="calculateRowPeriod(this)">${mOpt}</select></div></td>
-            <td><input type="text" class="exp-pos" placeholder="기간제교사"></td>
+            <td>
+                <select class="exp-pos">
+                    <option value="">선택</option>
+                    <option value="정교사">정교사</option>
+                    <option value="기간제교사">기간제교사</option>
+                    <option value="시간제기간제">시간제기간제</option>
+                    <option value="기타">기타</option>
+                </select>
+            </td>
             <td><input type="text" class="exp-org"></td>
             <td><input type="text" class="exp-months" placeholder="자동 계산" readonly style="background-color: #f8fafc; text-align: center;"></td>
             <td>${deleteBtn}</td>
@@ -821,7 +829,6 @@
         pdf.save(fileName);
 
         // 4. 학교 담당자 이메일 주소 및 메일 내용 설정
-        // 👇 "ourwonnie@gmail.com" 부분을 실제 접수받을 학교 이메일 주소로 변경하세요!
         const adminEmail = "ourwonnie@gmail.com"; 
         
         const emailSubject = encodeURIComponent(`[교사 채용 응시원서] 성명: ${userName} (${applySubject})`);
