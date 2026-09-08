@@ -364,7 +364,7 @@
         <!-- 버튼 그룹 -->
         <div class="btn-group">
             <button type="button" class="btn-preview" onclick="downloadPDF()">📄 원서 및 자기소개서 PDF 저장</button>
-            <button type="submit" id="submitBtn" class="btn-submit">응시원서 제출하기</button>
+            <button type="submit" id="submitBtn" class="btn-submit">다운받은 PDF를 첨부하여<br>담당자 이메일로 전송하기</button>
         </div>
     </form>
 </div>
@@ -753,7 +753,7 @@
         
         const btn = document.querySelector('.btn-preview');
         const originalText = btn.innerText;
-        btn.innerText = 'PDF 생성 중... 잠시만 기다려주세요';
+        btn.innerHTML = 'PDF 생성 중... <br>잠시만 기다려주세요';
         btn.disabled = true;
 
         const { jsPDF } = window.jspdf;
@@ -842,7 +842,7 @@
         alert('PDF 생성 중 오류가 발생했습니다.');
     } finally {
         btn.disabled = false;
-        btn.innerText = '응시원서 제출하기';
+        btn.innerHTML = '다운받은 PDF를 첨부하여<br>담당자 이메일로 전송하기';
     }
 });
 </script>
