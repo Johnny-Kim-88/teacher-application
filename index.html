@@ -69,16 +69,6 @@
         .agree-text { font-size: 10px; line-height: 1.5; border: 1px solid #000; padding: 8px; margin-top: 10px; text-align: justify; }
         .footer-declaration { text-align: center; font-size: 11px; margin-top: 15px; line-height: 1.8; }
         .footer-signature { text-align: center; font-size: 16px; font-weight: bold; margin-top: 20px; }
-        
-        /* 자기소개서 전용 양식 (휴먼명조, 12pt, 줄간격 1.6) */
-        .cover-letter-text { 
-            font-family: '휴먼명조', 'Human Myeongjo', serif; 
-            font-size: 12pt; 
-            line-height: 1.6; 
-            color: #000000; 
-            text-align: justify; 
-            flex: 1;
-        }
     </style>
 </head>
 <body>
@@ -275,52 +265,52 @@
             </tfoot>
         </table>
 
-        <!-- 5. 자기소개서 (4가지 항목 분리) -->
+        <!-- 5. 자기소개서 (4가지 항목 분리 - 각 500자 이내) -->
         <div class="section-header">
-            <h2 class="section-title">5. 자기소개서 (항목별 750자 이내)</h2>
+            <h2 class="section-title">5. 자기소개서 (항목별 500자 이내)</h2>
         </div>
         
         <!-- 항목 1 -->
         <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
             <label style="font-size: 14px; font-weight: bold; color: #1a365d; display: block; margin-bottom: 8px;">1. 자신의 장·단점</label>
-            <textarea id="cover_1" required maxlength="750" rows="5" placeholder="내용을 입력해주세요." 
+            <textarea id="cover_1" required maxlength="500" rows="4" placeholder="내용을 입력해주세요." 
                       style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; line-height: 1.6; resize: vertical;" 
-                      oninput="updateItemCharCount(this, 'count_1', 750)"></textarea>
+                      oninput="updateItemCharCount(this, 'count_1', 500)"></textarea>
             <div style="text-align: right; font-size: 12px; color: #64748b; margin-top: 5px; font-weight: bold;">
-                글자 수: <span id="count_1" style="color: #1a365d;">0</span> / 750 자
+                글자 수: <span id="count_1" style="color: #1a365d;">0</span> / 500 자
             </div>
         </div>
 
         <!-- 항목 2 -->
         <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
             <label style="font-size: 14px; font-weight: bold; color: #1a365d; display: block; margin-bottom: 8px;">2. 학생 인성지도계획</label>
-            <textarea id="cover_2" required maxlength="750" rows="5" placeholder="내용을 입력해주세요." 
+            <textarea id="cover_2" required maxlength="500" rows="4" placeholder="내용을 입력해주세요." 
                       style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; line-height: 1.6; resize: vertical;" 
-                      oninput="updateItemCharCount(this, 'count_2', 750)"></textarea>
+                      oninput="updateItemCharCount(this, 'count_2', 500)"></textarea>
             <div style="text-align: right; font-size: 12px; color: #64748b; margin-top: 5px; font-weight: bold;">
-                글자 수: <span id="count_2" style="color: #1a365d;">0</span> / 750 자
+                글자 수: <span id="count_2" style="color: #1a365d;">0</span> / 500 자
             </div>
         </div>
 
         <!-- 항목 3 -->
         <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
             <label style="font-size: 14px; font-weight: bold; color: #1a365d; display: block; margin-bottom: 8px;">3. 교과학습 지도계획</label>
-            <textarea id="cover_3" required maxlength="750" rows="5" placeholder="내용을 입력해주세요." 
+            <textarea id="cover_3" required maxlength="500" rows="4" placeholder="내용을 입력해주세요." 
                       style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; line-height: 1.6; resize: vertical;" 
-                      oninput="updateItemCharCount(this, 'count_3', 750)"></textarea>
+                      oninput="updateItemCharCount(this, 'count_3', 500)"></textarea>
             <div style="text-align: right; font-size: 12px; color: #64748b; margin-top: 5px; font-weight: bold;">
-                글자 수: <span id="count_3" style="color: #1a365d;">0</span> / 750 자
+                글자 수: <span id="count_3" style="color: #1a365d;">0</span> / 500 자
             </div>
         </div>
 
         <!-- 항목 4 -->
         <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; padding: 15px; border-radius: 6px; margin-bottom: 15px;">
             <label style="font-size: 14px; font-weight: bold; color: #1a365d; display: block; margin-bottom: 8px;">4. 본인의 교직관</label>
-            <textarea id="cover_4" required maxlength="750" rows="5" placeholder="내용을 입력해주세요." 
+            <textarea id="cover_4" required maxlength="500" rows="4" placeholder="내용을 입력해주세요." 
                       style="width: 100%; padding: 12px; border: 1px solid #cbd5e1; border-radius: 4px; font-size: 13px; line-height: 1.6; resize: vertical;" 
-                      oninput="updateItemCharCount(this, 'count_4', 750)"></textarea>
+                      oninput="updateItemCharCount(this, 'count_4', 500)"></textarea>
             <div style="text-align: right; font-size: 12px; color: #64748b; margin-top: 5px; font-weight: bold;">
-                글자 수: <span id="count_4" style="color: #1a365d;">0</span> / 750 자
+                글자 수: <span id="count_4" style="color: #1a365d;">0</span> / 500 자
             </div>
         </div>
 
@@ -353,7 +343,7 @@
 
         <!-- 버튼 그룹 -->
         <div class="btn-group">
-            <button type="button" class="btn-preview" onclick="downloadPDF()">여기를 클릭하여 PDF 저장 후 njhs1139@korea.kr로 첨부하여 보내주세요</button>
+            <button type="button" class="btn-preview" onclick="downloadPDF()">PDF 저장 후 njhs1139@korea.kr로 첨부하여 보내주세요</button>
         </div>
     </form>
 </div>
@@ -448,7 +438,7 @@
         </div>
     </div>
     
-    <!-- 자기소개서 동적 페이지들이 생성되는 영역 -->
+    <!-- 자기소개서 1페이지 통합 영역 -->
     <div id="cover-letter-pages-container"></div>
 </div>
 
@@ -704,49 +694,28 @@
         const container = document.getElementById('cover-letter-pages-container');
         container.innerHTML = '';
 
-        let pagesData = [];
-        let currentPageItems = [];
-        let currentCharCount = 0;
-        const maxCharsPerCoverPage = 1300; 
-
+        // 글자 크기를 10pt로 설정하고 한 페이지에 맞도록 레이아웃 구성
+        const pageDiv = document.createElement('div');
+        pageDiv.className = 'pdf-page';
+        
+        let htmlContent = `<div class="paper-title" style="margin-bottom: 12px; font-size: 18px;">자 기 소 개 서</div>`;
+        htmlContent += `<div style="display: flex; flex-direction: column; justify-content: space-between; height: calc(100% - 40px);">`;
+        
         items.forEach(item => {
-            const formattedBlock = `[ ${item.title} ]\n${item.text || '내용이 입력되지 않았습니다.'}\n`;
-            const blockLength = formattedBlock.length;
-
-            if (currentCharCount + blockLength > maxCharsPerCoverPage && currentPageItems.length > 0) {
-                pagesData.push(currentPageItems);
-                currentPageItems = [formattedBlock];
-                currentCharCount = blockLength;
-            } else {
-                currentPageItems.push(formattedBlock);
-                currentCharCount += blockLength;
-            }
-        });
-        if (currentPageItems.length > 0) {
-            pagesData.push(currentPageItems);
-        }
-
-        pagesData.forEach((pageContentArray, index) => {
-            const pageDiv = document.createElement('div');
-            pageDiv.className = 'pdf-page';
-            
-            let htmlContent = `<div class="paper-title" style="margin-bottom: 15px;">자 기 소 개 서</div>`;
-            htmlContent += `<div class="cover-letter-text" style="display: flex; flex-direction: column; gap: 12px;">`;
-            
-            pageContentArray.forEach(block => {
-                htmlContent += `<div style="white-space: pre-wrap; word-break: break-all;">${block}</div>`;
-            });
-            
+            htmlContent += `<div style="margin-bottom: 2px;">`;
+            htmlContent += `<div style="font-weight: bold; margin-bottom: 2px; color: #1a365d; font-size: 10.5pt;">[ ${item.title} ]</div>`;
+            htmlContent += `<div style="font-family: '휴먼명조', 'Human Myeongjo', serif; font-size: 10pt; line-height: 1.35; text-align: justify; white-space: pre-wrap; word-break: break-all;">${item.text || '내용이 입력되지 않았습니다.'}</div>`;
             htmlContent += `</div>`;
-            htmlContent += `<div style="text-align: center; font-size: 11px; color: #666; margin-top: auto; padding-top: 10px;">- ${index + 2} -</div>`;
-            
-            pageDiv.innerHTML = htmlContent;
-            container.appendChild(pageDiv);
         });
+        
+        htmlContent += `</div>`;
+        htmlContent += `<div style="text-align: center; font-size: 10px; color: #666; margin-top: 4px;">- 2 -</div>`;
+        
+        pageDiv.innerHTML = htmlContent;
+        container.appendChild(pageDiv);
     }
 
     async function downloadPDF() {
-        // 필수 입력값 검증
         const by = document.getElementById('birth_year').value, bm = document.getElementById('birth_month').value, bd = document.getElementById('birth_day').value;
         if (!by || !bm || !bd) { alert('생년월일을 올바르게 선택해 주세요.'); return; }
         
@@ -792,11 +761,10 @@
         initBirthdateSelects(); 
         initTeacherLicSelects(); 
         
-        // 학력사항 기본 2줄 생성 (맨 위: 대학교, 아래: 대학원)
         addEducationRow("○○대학교", true);  
         addEducationRow("○○대학원", false); 
 
-        addExperienceRow(true); // 경력사항 기본 1줄 생성
+        addExperienceRow(true);
     };
 </script>
 
