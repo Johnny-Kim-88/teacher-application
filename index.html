@@ -90,7 +90,7 @@
                         <option value="국어">국어</option>
                         <option value="수학">수학</option>
                         <option value="영어">영어</option>
-                        <option value="한국사/역사">한국사/역사</option>
+                        <option value="역사">역사</option>
                         <option value="일반사회">일반사회</option>
                         <option value="지리">지리</option>
                         <option value="윤리">윤리</option>
@@ -458,8 +458,8 @@
         }
     }
 
-    function generateYearOptions(startYear = 1970) {
-        const currentYear = new Date().getFullYear();
+    function generateYearOptions(startYear = 1970, maxYear = null) {
+        const currentYear = maxYear !== null ? maxYear : new Date().getFullYear();
         let options = '<option value="">년도</option>';
         for (let y = currentYear; y >= startYear; y--) { options += `<option value="${y}">${y}년</option>`; }
         return options;
@@ -484,7 +484,7 @@
     }
 
     function initBirthdateSelects() {
-        document.getElementById('birth_year').innerHTML = generateYearOptions(1950);
+        document.getElementById('birth_year').innerHTML = generateYearOptions(1950, 2010);
         document.getElementById('birth_month').innerHTML = generateMonthOptions();
         document.getElementById('birth_day').innerHTML = generateDayOptions();
     }
@@ -694,7 +694,6 @@
         const container = document.getElementById('cover-letter-pages-container');
         container.innerHTML = '';
 
-        // 글자 크기를 10pt로 설정하고 한 페이지에 맞도록 레이아웃 구성
         const pageDiv = document.createElement('div');
         pageDiv.className = 'pdf-page';
         
