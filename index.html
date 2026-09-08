@@ -4,16 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>학교법인 우정학원 능주고등학교 교사 채용 응시원서 및 자기소개서</title>
-    <!-- EmailJS SDK -->
-    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <!-- html2canvas & jsPDF 라이브러리 (PDF 변환용) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
-    <script type="text/javascript">
-        (function() {
-            emailjs.init("YOUR_PUBLIC_KEY");
-        })();
-    </script>
     <style>
         * { box-sizing: border-box; font-family: 'Pretendard', 'Malgun Gothic', sans-serif; }
         body { background-color: #f4f6f9; margin: 0; padding: 30px 15px; }
@@ -44,12 +37,9 @@
         .btn-del:hover { background-color: #dc2626; }
 
         .btn-group { display: flex; gap: 10px; margin-top: 20px; }
-        .btn-preview { flex: 1; background-color: #0d9488; color: white; border: none; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
+        .btn-preview { width: 100%; background-color: #0d9488; color: white; border: none; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
         .btn-preview:hover { background-color: #0f766e; }
-
-        .btn-submit { flex: 1; background-color: #1a365d; color: white; border: none; padding: 16px; font-size: 16px; font-weight: bold; border-radius: 6px; cursor: pointer; transition: background 0.2s; }
-        .btn-submit:hover { background-color: #2563eb; }
-        .btn-submit:disabled { background-color: #94a3b8; cursor: not-allowed; }
+        .btn-preview:disabled { background-color: #94a3b8; cursor: not-allowed; }
 
         .no-exp-label { font-size: 13px; font-weight: bold; color: #0f766e; cursor: pointer; display: flex; align-items: center; gap: 4px; }
 
@@ -96,7 +86,7 @@
 <div class="container">
     <h1>학교법인 우정학원 능주고등학교 교사 채용 <br> 응시원서 및 자기소개서</h1>
 
-    <form id="applyForm">
+    <form id="applyForm" onsubmit="return false;">
         <!-- 1. 기본 인적사항 -->
         <div class="section-header">
             <h2 class="section-title">1. 기본 인적사항</h2>
@@ -363,8 +353,7 @@
 
         <!-- 버튼 그룹 -->
         <div class="btn-group">
-            <button type="button" class="btn-preview" onclick="downloadPDF()">📄 원서 및 자기소개서 PDF 저장</button>
-            <button type="submit" id="submitBtn" class="btn-submit">다운받은 PDF를 첨부하여<br>담당자 이메일로 전송하기</button>
+            <button type="button" class="btn-preview" onclick="downloadPDF()">PDF 저장 후 njhs1139@korea.kr로 첨부하여 보내주세요</button>
         </div>
     </form>
 </div>
@@ -757,29 +746,46 @@
     }
 
     async function downloadPDF() {
+        // 필수 입력값 검증
+        const by = document.getElementById('birth_year').value, bm = document.getElementById('birth_month').value, bd = document.getElementById('birth_day').value;
+        if (!by || !bm || !bd) { alert('생년월일을 올바르게 선택해 주세요.'); return; }
+        
+        const p2 = document.getElementById('phone_mid').value.trim(), p3 = document.getElementById('phone_end').value.trim();
+        if (!p2 || !p3) { alert('휴대폰 번호를 올바르게 입력해 주세요.'); return; }
+
+        const userName = document.getElementById('user_name').value.trim();
+        if (!userName) { alert('성명을 입력해 주세요.'); document.getElementById('user_name').focus(); return; }
+
+        if (!uploadedPhotoData) { alert('사진을 첨부해 주세요.'); return; }
+
         populatePaperTemplate();
         
         const btn = document.querySelector('.btn-preview');
         const originalText = btn.innerText;
-        btn.innerHTML = 'PDF 생성 중... <br>잠시만 기다려주세요';
+        btn.innerHTML = 'PDF 생성 중... 잠시만 기다려주세요';
         btn.disabled = true;
 
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pages = document.querySelectorAll('#pdf-render-area .pdf-page');
-        const name = document.getElementById('user_name').value || '응시자';
+        try {
+            const { jsPDF } = window.jspdf;
+            const pdf = new jsPDF('p', 'mm', 'a4');
+            const pages = document.querySelectorAll('#pdf-render-area .pdf-page');
 
-        for (let i = 0; i < pages.length; i++) {
-            if (i > 0) pdf.addPage();
-            const canvas = await html2canvas(pages[i], { scale: 2, useCORS: true });
-            const imgData = canvas.toDataURL('image/jpeg', 1.0);
-            pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+            for (let i = 0; i < pages.length; i++) {
+                if (i > 0) pdf.addPage();
+                const canvas = await html2canvas(pages[i], { scale: 2, useCORS: true });
+                const imgData = canvas.toDataURL('image/jpeg', 1.0);
+                pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
+            }
+            
+            pdf.save(`응시원서_자기소개서_${userName}.pdf`);
+            alert('PDF가 저장되었습니다. njhs1139@korea.kr로 이 파일을 첨부하여 보내주세요.');
+        } catch (error) {
+            console.error('오류 발생:', error);
+            alert('PDF 생성 중 오류가 발생했습니다.');
+        } finally {
+            btn.innerText = originalText;
+            btn.disabled = false;
         }
-        
-        pdf.save(`응시원서_자기소개서_${name}.pdf`);
-        
-        btn.innerText = originalText;
-        btn.disabled = false;
     }
 
     window.onload = function() {
@@ -792,66 +798,6 @@
 
         addExperienceRow(true); // 경력사항 기본 1줄 생성
     };
-
-    document.getElementById('applyForm').addEventListener('submit', async function(event) {
-    event.preventDefault();
-
-    // 1. 필수 입력값 검증
-    const by = document.getElementById('birth_year').value, bm = document.getElementById('birth_month').value, bd = document.getElementById('birth_day').value;
-    if (!by || !bm || !bd) { alert('생년월일을 올바르게 선택해 주세요.'); return; }
-    
-    const p2 = document.getElementById('phone_mid').value.trim(), p3 = document.getElementById('phone_end').value.trim();
-    if (!p2 || !p3) { alert('휴대폰 번호를 올바르게 입력해 주세요.'); return; }
-
-    const btn = document.getElementById('submitBtn');
-    btn.innerText = 'PDF 생성 및 다운로드 중...'; 
-    btn.disabled = true;
-
-    try {
-        // 2. PDF 데이터 동적 생성 (미리보기 템플릿 채우기)
-        populatePaperTemplate();
-        const { jsPDF } = window.jspdf;
-        const pdf = new jsPDF('p', 'mm', 'a4');
-        const pages = document.querySelectorAll('#pdf-render-area .pdf-page');
-
-        for (let i = 0; i < pages.length; i++) {
-            if (i > 0) pdf.addPage();
-            const canvas = await html2canvas(pages[i], { scale: 2, useCORS: true });
-            const imgData = canvas.toDataURL('image/jpeg', 1.0);
-            pdf.addImage(imgData, 'JPEG', 0, 0, 210, 297);
-        }
-
-        const userName = document.getElementById('user_name').value;
-        const applySubject = document.getElementById('apply_subject').value;
-        const fileName = `응시원서_자기소개서_${userName}.pdf`;
-
-        // 3. 사용자의 기기로 PDF 파일 자동 다운로드
-        pdf.save(fileName);
-
-        // 4. 학교 담당자 이메일 주소 및 메일 내용 설정
-        const adminEmail = "ourwonnie@gmail.com"; 
-        
-        const emailSubject = encodeURIComponent(`[교사 채용 응시원서] 성명: ${userName} (${applySubject})`);
-        const emailBody = encodeURIComponent(
-            `안녕하세요, 지원자 ${userName}입니다.\n\n` +
-            `교사 채용 응시원서 및 자기소개서 제출합니다.\n` +
-            `(※ 방금 컴퓨터 또는 모바일기기에 다운로드된 '${fileName}' 파일을 이 메일에 꼭 첨부하여 보내주세요!)\n\n` +
-            `감사합니다.`
-        );
-
-        // 5. 기본 메일 프로그램 실행
-        window.location.href = `mailto:${adminEmail}?subject=${emailSubject}&body=${emailBody}`;
-
-        alert('PDF가 다운로드되었습니다! 열리는 메일 창에 다운로드된 파일을 첨부하여 전송해 주세요.');
-
-    } catch (error) {
-        console.error('오류 발생:', error);
-        alert('PDF 생성 중 오류가 발생했습니다.');
-    } finally {
-        btn.disabled = false;
-        btn.innerHTML = '다운받은 PDF를 첨부하여<br>담당자 이메일로 전송하기';
-    }
-});
 </script>
 
 </body>
